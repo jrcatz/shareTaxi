@@ -1,4 +1,4 @@
-@import url('http://cdn.jacklaurence.net/circularstd/circularstd.css');
+@import url('https://sharetaxi.philsony.com/fonts/circularstd/circularstd.css?v=3');
 
 html {
 	font-size: 16px !important;
@@ -29,7 +29,7 @@ html {
 
 .login {
 	padding-top: 15vh;
-	background-image: url("https://images.pexels.com/photos/167684/pexels-photo-167684.jpeg?w=940&h=650&auto=compress&cs=tinysrgb");
+	background-image: url("https://www.treadstonelaw.co.uk/wp-content/uploads/2014/06/taxi.png");
 	background-attachment: fixed;
 	background-size: cover;
 }
@@ -46,7 +46,7 @@ html {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	opacity: .9;
+	opacity: .95;
 }
 
 .login label {
@@ -92,4 +92,55 @@ html {
 	color: #fff;
 	text-transform: uppercase;
 	font-weight: normal;
+}
+
+.login .error {
+	text-align: center;
+	font-size: 16px;
+	color: #fff;
+	margin-bottom: 5px;
+}
+
+.welcome {
+	background-color: #27295c;
+	color: #fff !important;
+	font-size: 20px !important;
+	font-family: 'Circular Std' !important;
+}
+
+.welcome a {
+	color: #fff !important;
+}
+
+.welcome .yellow {
+	background-color: #f8c327;
+}
+
+.welcome .icon {
+	padding: 15px 0;
+}
+
+@media screen and (max-height: 500px) {
+	.login {
+		padding-top: 5vh;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.login form {
+		margin-left: 1vw;
+		margin-right: 1vw;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.login .title {
+		font-size: 40px;
+	}
+}
+
+@media screen and (max-width: 300px) {
+	.login .title {
+		font-size: 30px;
+	}
 }

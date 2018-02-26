@@ -29,22 +29,22 @@
          header("location: welcome.php");
       }else {
          $error = "You have entered invalid email/password.";
-         $error = "Your Email or Password is invalid";
       }
    }
 ?>
 <html>
    <head>
       <title>Login Page</title>
-		<link rel="stylesheet" href="css/general_style.css" />
+		<link rel="stylesheet" href="css/general_style.css?<?php echo rand(0, 100); ?>" />
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
         <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    </head>
     <body class='login'>
         <div class="blue-overlay"></div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4 col-xs-8 col-md-offset-4 col-xs-offset-2">
+                <div class="col-md-4 col-xs-10 col-xs-offset-1 col-md-offset-4">
                     <div class="title">ShareTaxi</div>
                     <form action= "" method = "post">
                         <div class="error"><?php echo $error; ?></div>

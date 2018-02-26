@@ -3,7 +3,7 @@
   require('../connect.php');
 ?>
   <head>
-    <title>Simple Map</title>
+    <title>Market</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -78,21 +78,19 @@
           $searchLongitude = round($break[1],2);
 
           // searches the database check read me for explanation
-          $q = "SELECT t1.pool_id, t1.route_origlat, t1.route_origlong, t1.route_destlat, t1.route_destlong, t1.route_id, t2.num_users, t1.route_cost, t1.route_status, t1.add_orig, t1.add_dest
-                FROM
+          //23 feb : Used the input string instead of the long/lat.
+          $q = "SELECT t1.*, t2.* FROM
                 (SELECT p.pool_id as `pool_id`, r.origin_latitude as `route_origlat`, r.origin_longitude as `route_origlong`, r.destination_latitude as `route_destlat`, r.destination_longitude as `route_destlong`,
                 r.route_id as `route_id`, r.cost as `route_cost`, r.status as `route_status`, r.origin_address as `add_orig`, r.destination_address as `add_dest`
                 FROM route r, pool p, users u
                 WHERE p.user_id = u.user_id AND p.route_id = r.route_id AND r.status = 'WAITING' ) t1
-                INNER JOIN
+                LEFT JOIN
                 (SELECT route_id, COUNT(*) as num_users FROM pool GROUP BY route_id) t2
                 ON t1.route_id = t2.route_id
-                INNER JOIN
-                  (SELECT user_id, location_latitude, location_longitude FROM users WHERE user_id = 1) t3
-                WHERE t2.num_users < 4 AND ((ROUND(t3.location_latitude,2) = ROUND(t1.route_origlat,2) AND ROUND(t3.location_longitude,2) = ROUND(t1.route_origlong,2))
-                                             OR (ROUND(t1.route_destlat,2) = {$searchLatitude} AND ROUND(t1.route_destlong,2) = {$searchLongitude}))
+                WHERE t2.num_users < 4 AND t1.add_orig LIKE '%".$_POST['latlng']."%' 
                 GROUP BY t2.route_id DESC";
-
+          
+   
           $result = mysqli_query($conn, $q);
           $rows = mysqli_num_rows($result);
           if($rows != 0){ //check if ther exist a result
@@ -107,7 +105,7 @@
                 echo "<p class='num_user_pool'>Number of sharers: {$data['num_users']}</p>";
                 echo "<p class='cost'>Trip cost: {$data['route_cost']}</p>";
                 echo "<p class='status'>Pool Status: {$data['route_status']}</p>";
-                echo "<p class='pool_id'>Pool ID: {$data['pool_id']}</p>";
+                echo "<p class='pool_id'>Route ID: {$data['route_id']}</p>";
                 echo "<form method='POST' action ='joinpool.php'>";
                   echo "<input type='text' value={$data['route_id']} name='route_id' class='hiddeninput'>";
                   echo "<input type='text' value={$data['pool_id']} name='pool_id' class='hiddeninput'>";
@@ -124,12 +122,13 @@
             echo "<center><p class='h1'>No pools available, sorry.</center>";
             echo "</div>";
             echo "<div class='row'>";
-            echo "<center><button class='btn btn-success'>Create Pool</button></center>";
+            echo "<center><a href='".BASE_URL."route/create_src.php'><button class='btn btn-success'>Create Pool</button></a></center>";
             echo "</div>";
           }
         }
       ?>
     </div>
+    <h2><a href = "<?php echo BASE_URL ; ?>/login/welcome.php">Back</a></h2>
   </div>
   <div id="map"></div>
     <script>
